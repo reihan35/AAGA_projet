@@ -3,7 +3,6 @@ import os
 import numpy
 
 NB = 0
-
 class Arbre:
     def __init__(self, cle, val, F):
         global NB
