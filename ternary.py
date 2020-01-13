@@ -151,6 +151,7 @@ for i in range(200):
         print(c.affiche())
         print(a.affiche())
         print(b.affiche())
+        raise AssertionError
         break
     assert list_c == list_a_b
     print("iteration " + str(i))
