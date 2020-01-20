@@ -19,17 +19,18 @@ class TernaryMachine(RuleBasedStateMachine):
     @rule(arbre=Arbres, mot=text())
     def insert(self, arbre, mot):
         ternary.insert(arbre, mot)
-        assert arbre.search(mot)
+        assert arbre.search(arbre, mot)
 
     @rule (arbre = Arbres, mot=text())
-    def search(self, mot):
+    def search(self, arbre, mot):
+        return ternary.search(arbre, mot)
 
     @rule(target=Arbres, a1=Arbres, a2=Arbres)
     def fusion(self, a1,a2):
         res = ternary.fusion(a1, a2)
-        list_a_b = a1.list_of_words("").union(a2.list_of_words(""))
+        list_a_b = ternary.list_of_words(a1, "").union(ternary.list_of_words(a2, ""))
         for w in list_a_b:
-            assert res.search(w)
+            assert ternary.search(res, w)
 
 
 TestTernary = TernaryMachine.TestCase

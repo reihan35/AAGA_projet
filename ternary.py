@@ -21,46 +21,46 @@ class Arbre:
         g += ')'
         return g
 
-    def list_of_words(self,pref):
-        res = set()
-        if self.cle == "":
-            return res
-        if self.val == 0:
-            res.add(pref + self.cle)
-        res = res.union(self.fils[0].list_of_words(pref))
-        res = res.union(self.fils[1].list_of_words(pref + self.cle))
-        res = res.union(self.fils[2].list_of_words(pref))
+def list_of_words(A,pref):
+    res = set()
+    if A.cle == "":
         return res
+    if A.val == 0:
+        res.add(pref + A.cle)
+    res = res.union(A.fils[0].list_of_words(pref))
+    res = res.union(A.fils[1].list_of_words(pref + A.cle))
+    res = res.union(A.fils[2].list_of_words(pref))
+    return res
 
-    def search(self,mot):
-        if mot=="":
-            return False
-        if len(self.fils) == 0:
-            return False
-        if mot[0] < self.cle:
-            return self.fils[0].search(mot)
-        if mot[0] > self.cle:
-            return self.fils[2].search(mot)
-        if len(mot) == 1:
-            if mot[0] == self.cle and self.val == 0:
-                return True
-            return False
-        else:
-            return self.fils[1].search(mot[1:])
+def search(A, mot):
+    if mot=="":
+        return False
+    if len(A.fils) == 0:
+        return False
+    if mot[0] < A.cle:
+        return A.fils[0].search(mot)
+    if mot[0] > A.cle:
+        return A.fils[2].search(mot)
+    if len(mot) == 1:
+        if mot[0] == A.cle and A.val == 0:
+            return True
+        return False
+    else:
+        return A.fils[1].search(mot[1:])
 
 
-    """
-    def pprint(self, spaces):
-        if self.cle == '':
-            return
-        if len(self.fils) == 0:
-            print(self.cle, end='')
-        else:
-            self.fils[0].pprint()
-            print()
-            print(self.cle)
-            self.fils[1].pprint()
-    """
+"""
+def pprint(self, spaces):
+    if self.cle == '':
+        return
+    if len(self.fils) == 0:
+        print(self.cle, end='')
+    else:
+        self.fils[0].pprint()
+        print()
+        print(self.cle)
+        self.fils[1].pprint()
+"""
 
 
 
@@ -140,12 +140,12 @@ for i in range(200):
     a = creat_Shakespeare('/home/fatemeh/PycharmProjects/AAGA/Shakespeare/romeo_juliet.txt',2)
     b= creat_Shakespeare('/home/fatemeh/PycharmProjects/AAGA/Shakespeare/romeo_juliet.txt',2)
     c = fusion(a,b)
-    list_a_b = a.list_of_words("").union(b.list_of_words(""))
-    list_c = c.list_of_words("")
+    list_a_b = list_of_words(a, "").union(list_of_words(b, ""))
+    list_c = list_of_words(c, "")
     try:
         for w in list_a_b:
             print(w)
-            assert c.search(w)
+            assert search(c, w)
     except AssertionError:
         print(list_a_b)
         print(c.affiche())
@@ -159,7 +159,7 @@ for i in range(200):
 a = Arbre('', None, [])
 a=insert(a, "fatemeh")
 a=insert(a,"fati")
-print(a.search("fa"))
+print(search(a,"fa"))
 #print(c.affiche())
 
 #print(a.affiche())
