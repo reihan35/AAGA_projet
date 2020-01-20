@@ -1,0 +1,24 @@
+from hypothesis.stateful import Bundle,rule,RuleBasedStateMachine
+from hypothesis.strategies import integers,text
+import ternary
+
+
+
+class HeapMachine(RuleBasedStateMachine):
+    Arbres = Bundle('arbres')
+
+    @rule(target=Arbres)
+    def newArbre(self):
+        return ternary.gener_feuille();
+
+    @rule(arbre=Arbres, mot=text())
+    def insert(self, arbre, mot):
+        ternary.insert(arbre, mot)
+        assert arbre.search(mot)
+
+    @rule(target=Arbres, a1=Arbres, a2=Arbres)
+    def fusion(self, a1,a2):
+        res = ternary.fusion(a1, a2)
+        list_a_b = a1.list_of_words("").union(a2.list_of_words(""))
+        for w in list_a_b:
+            assert res.search(w)

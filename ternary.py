@@ -99,7 +99,6 @@ def insert(A, mot):
             #val = 0
         return gener_noeud(A.cle, val, [A.fils[0], A.fils[1], insert(A.fils[2], mot)])
 
-
 def fusion(A, B):
     if A.cle == '':
         return B
@@ -148,10 +147,10 @@ for i in range(200):
             print(w)
             assert c.search(w)
     except AssertionError:
+        print(list_a_b)
         print(c.affiche())
         print(a.affiche())
         print(b.affiche())
-        raise AssertionError
         break
     assert list_c == list_a_b
     print("iteration " + str(i))
